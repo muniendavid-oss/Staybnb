@@ -1,0 +1,3 @@
+using System.ComponentModel.DataAnnotations;
+namespace Staybnb.Models;
+public class Notification { public int Id {get;set;} [Required] public string UserId {get;set;}=""; [Required,StringLength(200)] public string Title {get;set;}=""; [Required,StringLength(1000)] public string Body {get;set;}=""; public string? Link {get;set;} public DateTime CreatedAt {get;set;}=DateTime.UtcNow; public bool IsRead {get;set;}=false; }

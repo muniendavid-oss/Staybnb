@@ -1,0 +1,3 @@
+using System.ComponentModel.DataAnnotations;
+namespace Staybnb.Models;
+public class ActivityLog { public int Id {get;set;} public string? UserId {get;set;} [Required,StringLength(100)] public string Action {get;set;}=""; [StringLength(1000)] public string Details {get;set;}=""; [StringLength(100)] public string? EntityType {get;set;} public string? EntityId {get;set;} public DateTime CreatedAt {get;set;}=DateTime.UtcNow; }

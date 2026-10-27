@@ -1,0 +1,2 @@
+@model List<Notification>
+@{ViewData["Title"]="Notifications";}<div class="page-intro"><p class="eyebrow">YOUR UPDATES</p><h1>Notifications</h1></div><div class="stack">@foreach(var n in Model){<article class="panel notification"><div><strong>@n.Title</strong><p>@n.Body</p><span class="muted">@n.CreatedAt.ToLocalTime().ToString("dd MMM yyyy HH:mm")</span></div>@if(!string.IsNullOrWhiteSpace(n.Link)){<a href="@n.Link">Open →</a>}</article>}</div>@if(Model.Count==0){<div class="empty"><p>You're all caught up.</p></div>}

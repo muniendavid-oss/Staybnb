@@ -1,0 +1,2 @@
+@model List<HostApplication>
+@{ViewData["Title"]="My applications";}<div class="page-intro"><p class="eyebrow">YOUR HOST JOURNEY</p><h1>My applications</h1></div><p><a class="btn" asp-action="Apply">New application</a></p><div class="table-wrap"><table><thead><tr><th>Property</th><th>Submitted</th><th>Status</th><th>Notes</th></tr></thead><tbody>@foreach(var a in Model){<tr><td>@a.Property?.Title</td><td>@a.SubmittedAt.ToLocalTime().ToString("dd MMM yyyy")</td><td><span class="status">@a.Status</span></td><td>@a.AdminNotes</td></tr>}</tbody></table></div>

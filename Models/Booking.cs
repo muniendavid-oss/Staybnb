@@ -1,0 +1,3 @@
+using System.ComponentModel.DataAnnotations;
+namespace Staybnb.Models;
+public class Booking { public int Id {get;set;} public int PropertyId {get;set;} public Property? Property {get;set;} [Required] public string GuestId {get;set;}=""; public ApplicationUser? Guest {get;set;} public DateTime CheckIn {get;set;} public DateTime CheckOut {get;set;} [Range(1,30)] public int Travelers {get;set;}=1; public decimal TotalPrice {get;set;} public decimal PricePerNightSnapshot {get;set;} [Required,StringLength(20)] public string Status {get;set;}="Pending"; public DateTime CreatedAt {get;set;}=DateTime.UtcNow; public DateTime? CheckedInAt {get;set;} }

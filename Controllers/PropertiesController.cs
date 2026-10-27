@@ -1,0 +1,7 @@
+using Microsoft.AspNetCore.Authorization;using Microsoft.AspNetCore.Identity;using Microsoft.AspNetCore.Mvc;using Microsoft.EntityFrameworkCore;using Staybnb.Data;using Staybnb.Models;using Staybnb.Services;
+namespace Staybnb.Controllers;
+public class PropertiesController(ApplicationDbContext db,UserManager<ApplicationUser> users,ActivityLogger logger):Controller {
+ public async Task<IActionResult> Details(int id){var p=await db.Properties.Include(x=>x.Images).Include(x=>x.Host).FirstOrDefaultAsync(x=>x.Id==id&&x.IsActive);if(p==null)return NotFound();return View(p);}
+ [Authorize(Roles="Host")] public async Task<IActionResult> Manage(){var uid=users.GetUserId(User);return View(await db.Properties.Include(p=>p.Images).Where(p=>p.HostId==uid).ToListAsync());}
+ [HttpPost,ValidateAntiForgeryToken,Authorize(Roles="Host")] public async Task<IActionResult> ToggleActive(int id){var uid=users.GetUserId(User);var p=await db.Properties.FirstOrDefaultAsync(x=>x.Id==id&&x.HostId==uid);if(p==null)return NotFound();p.IsActive=!p.IsActive;await db.SaveChangesAsync();await logger.LogAsync(uid,"PropertyStatusChanged",$"Property {id} IsActive={p.IsActive}.","Property",id.ToString());return RedirectToAction(nameof(Manage));}
+}

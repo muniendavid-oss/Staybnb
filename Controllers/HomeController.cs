@@ -1,0 +1,3 @@
+using Microsoft.AspNetCore.Mvc; using Microsoft.EntityFrameworkCore; using Staybnb.Data;
+namespace Staybnb.Controllers;
+public class HomeController(ApplicationDbContext db) : Controller { public async Task<IActionResult> Index(string? city,string? type) { var q=db.Properties.Include(p=>p.Images).Where(p=>p.IsActive); if(!string.IsNullOrWhiteSpace(city)) q=q.Where(p=>p.City.Contains(city)); if(!string.IsNullOrWhiteSpace(type)) q=q.Where(p=>p.PropertyType==type); ViewBag.City=city; ViewBag.Type=type; return View(await q.OrderByDescending(p=>p.CreatedAt).ToListAsync()); } public IActionResult Error()=>View(); }
